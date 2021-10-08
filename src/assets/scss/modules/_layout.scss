@@ -1,0 +1,65 @@
+/* ID in index.html */
+#root {
+  height: 100vh;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main {
+  padding: 0px;
+  flex: auto;
+}
+
+.blog {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+}
+.content {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 75%;
+  padding: 10px 20px;
+  h1 {
+    font-size: 2rem;
+    font-weight: 300;
+  }
+}
+.blog-content {
+  h2 {
+    font-size: 1.5rem;
+    line-height: 1.2;
+    margin-bottom: 0.25rem;
+    text-transform: capitalize;
+  }
+  p {
+    font-weight: 200;
+  }
+  li {
+    margin-bottom: 1.25rem;
+  }
+}
+.sidebar {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 25%;
+  padding: 10px 20px;
+  border-left: 1px solid #c5c5c5;
+  h2 {
+    font-size: 1.6rem;
+    font-weight: 200;
+  }
+  h4 {
+    font-size: 1.3rem;
+    font-weight: 200;
+  }
+}
+
+.backToPosts {
+  display: block;
+  padding: 10px 20px 0px;
+}

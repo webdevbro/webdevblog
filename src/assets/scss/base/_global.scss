@@ -1,0 +1,67 @@
+@import url("https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;1,300;1,400&display=swap");
+
+body {
+  font-family: "Kanit", sans-serif;
+}
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas,
+    "Courier New", monospace;
+}
+
+/* ELEMENTS */
+a {
+  color: #305090;
+  text-decoration: none;
+  &:hover {
+    color: #f08040;
+  }
+}
+button {
+  cursor: pointer;
+  border: 1px solid #c0c0c0;
+}
+ul {
+  padding: 0px;
+  list-style: none;
+}
+li {
+  margin-top: 10px;
+}
+input {
+  font-size: 16px;
+  padding: 5px;
+  line-height: 1 !important;
+}
+button {
+  font-size: 16px;
+  padding: 10px;
+  line-height: 1 !important;
+}
+
+/* LIGHT & DARK */
+.light {
+  background-color: #e0e0e0;
+  color: #202020;
+}
+.dark {
+  background-color: #202020;
+  color: #e0e0e0;
+  button {
+    background-color: #202020;
+    color: #e0e0e0;
+  }
+  a {
+    color: #40c0f0;
+    &:hover {
+      color: #f08040;
+    }
+  }
+  .sidebar {
+    border-left: 1px solid #313131;
+  }
+}
