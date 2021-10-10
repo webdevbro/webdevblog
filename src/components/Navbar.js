@@ -1,9 +1,14 @@
 import React, { useContext, useState } from "react";
-import { Link, useHistory } from "react-router-dom";
+import {
+  Link,
+  NavLink,
+  useHistory,
+} from "react-router-dom";
 import { ThemeContext } from "../ThemeContext";
 
 const Navbar = () => {
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  const { theme, toggleTheme, user } =
+    useContext(ThemeContext);
   const [query, setQuery] = useState("");
   const history = useHistory();
   const handleSubmit = (event) => {
@@ -29,7 +34,23 @@ const Navbar = () => {
         </form>
       </div>
       <div className="header-item">
-        <a href="/login">login</a>
+        {user ? (
+          <>
+            <NavLink to="/profile" activeClassName="active">
+              {user.name}
+            </NavLink>{" "}
+            <NavLink
+              to="/create-post"
+              activeClassName="active"
+            >
+              Create post
+            </NavLink>
+          </>
+        ) : (
+          <NavLink to="/login" activeClassName="active">
+            Login
+          </NavLink>
+        )}{" "}
         <button onClick={toggleTheme}>
           {theme === "light" ? "Dark" : "Light"}
         </button>
