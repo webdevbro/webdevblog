@@ -9,8 +9,9 @@ import { ThemeContext } from "./ThemeContext";
 import HomePage from "./pages/HomePage";
 import PostPage from "./pages/PostPage";
 import LoginPage from "./pages/LoginPage";
-import ProfilePage from "./pages/ProfilePage";
 import PrivateRoute from "./components/PrivateRoute";
+import ProfilePage from "./pages/ProfilePage";
+import CreatePostPage from "./pages/CreatePostPage";
 
 function App() {
   const { theme } = useContext(ThemeContext);
@@ -23,6 +24,10 @@ function App() {
             <PrivateRoute
               path="/profile"
               component={ProfilePage}
+            />
+            <PrivateRoute
+              path="/create"
+              component={CreatePostPage}
             />
             <Route path="/login">
               <LoginPage />

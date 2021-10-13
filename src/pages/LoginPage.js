@@ -32,7 +32,8 @@ const reducer = (state, action) => {
 };
 
 const LoginPage = () => {
-  const { user, setUser } = useContext(ThemeContext);
+  const { user, setUser, backendAPI } =
+    useContext(ThemeContext);
   const history = useHistory();
   if (user) {
     history.push("/profile");
@@ -51,7 +52,7 @@ const LoginPage = () => {
     dispatch({ type: "LOGIN_REQUEST" });
     try {
       const { data } = await axios(
-        `https://jsonplaceholder.typicode.com/users?email=${email}&password=${password}`,
+        `${backendAPI}/users?email=${email}&password=${password}`,
       );
       if (data.length > 0) {
         dispatch({
@@ -77,7 +78,7 @@ const LoginPage = () => {
       setUser(loggedInUser);
       return history.push("/profile");
     }
-  }, [loggedInUser]);
+  }, [loggedInUser, backendAPI]);
 
   return (
     <div className="loginRegister">

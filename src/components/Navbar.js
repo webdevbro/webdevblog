@@ -7,8 +7,13 @@ import {
 import { ThemeContext } from "../ThemeContext";
 
 const Navbar = () => {
-  const { theme, toggleTheme, user } =
-    useContext(ThemeContext);
+  const {
+    theme,
+    toggleTheme,
+    user,
+    backendAPI,
+    toggleBackendAPI,
+  } = useContext(ThemeContext);
   const [query, setQuery] = useState("");
   const history = useHistory();
   const handleSubmit = (event) => {
@@ -39,10 +44,7 @@ const Navbar = () => {
             <NavLink to="/profile" activeClassName="active">
               {user.name}
             </NavLink>{" "}
-            <NavLink
-              to="/create-post"
-              activeClassName="active"
-            >
+            <NavLink to="/create" activeClassName="active">
               Create post
             </NavLink>
           </>
@@ -53,6 +55,9 @@ const Navbar = () => {
         )}{" "}
         <button onClick={toggleTheme}>
           {theme === "light" ? "Dark" : "Light"}
+        </button>{" "}
+        <button onClick={toggleBackendAPI}>
+          {backendAPI === "/api" ? "API:Mock" : "API:Real"}
         </button>
       </div>
     </div>

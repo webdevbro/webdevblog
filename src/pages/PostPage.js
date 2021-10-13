@@ -1,7 +1,12 @@
 import axios from "axios";
-import React, { useEffect, useReducer } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useReducer,
+} from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
+import { ThemeContext } from "../ThemeContext";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -26,6 +31,7 @@ const reducer = (state, action) => {
 };
 
 const PostPage = () => {
+  const { backendAPI } = useContext(ThemeContext);
   const { postId } = useParams();
   const [state, dispatch] = useReducer(reducer, {
     loading: false,
@@ -38,10 +44,10 @@ const PostPage = () => {
     dispatch({ type: "POST_REQUEST" });
     try {
       const { data } = await axios.get(
-        `https://jsonplaceholder.typicode.com/posts/${postId}`,
+        `${backendAPI}/posts/${postId}`,
       );
       const { data: userData } = await axios.get(
-        `https://jsonplaceholder.typicode.com/users/${data.userId}`,
+        `${backendAPI}/users/${data.userId}`,
       );
       dispatch({
         type: "POST_SUCCESS",
@@ -54,7 +60,7 @@ const PostPage = () => {
 
   useEffect(() => {
     loadPost();
-  }, []);
+  }, [backendAPI]);
 
   return (
     <div>

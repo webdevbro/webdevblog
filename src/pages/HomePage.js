@@ -1,6 +1,11 @@
-import React, { useEffect, useReducer } from "react";
+import React, {
+  useContext,
+  useEffect,
+  useReducer,
+} from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
+import { ThemeContext } from "../ThemeContext";
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -47,8 +52,8 @@ const reducer = (state, action) => {
 };
 
 const HomePage = () => {
+  const { backendAPI } = useContext(ThemeContext);
   const { query, userId } = useParams();
-
   const [state, dispatch] = useReducer(reducer, {
     loading: false,
     error: "",
@@ -58,7 +63,6 @@ const HomePage = () => {
     users: [],
     user: {},
   });
-
   const {
     loading,
     error,
@@ -74,8 +78,8 @@ const HomePage = () => {
     try {
       const { data } = await axios.get(
         userId
-          ? `https://jsonplaceholder.typicode.com/posts?userId=${userId}`
-          : `https://jsonplaceholder.typicode.com/posts`,
+          ? `${backendAPI}/posts?userId=${userId}`
+          : `${backendAPI}/posts`,
       );
       const filteredPosts = query
         ? data.filter((item) => {
@@ -102,8 +106,8 @@ const HomePage = () => {
     try {
       const { data } = await axios.get(
         userId
-          ? `https://jsonplaceholder.typicode.com/users/${userId}`
-          : `https://jsonplaceholder.typicode.com/users`,
+          ? `${backendAPI}/users/${userId}`
+          : `${backendAPI}/users`,
       );
       dispatch({
         type: userId ? "USER_SUCCESS" : "USERS_SUCCESS",
@@ -120,7 +124,7 @@ const HomePage = () => {
   useEffect(() => {
     loadPosts();
     loadUsers();
-  }, [query, userId]);
+  }, [query, userId, backendAPI]);
 
   return (
     <div>
@@ -139,7 +143,7 @@ const HomePage = () => {
           {userId ? (
             <h1>Results from: {user.name}</h1>
           ) : query ? (
-            <h1>Serch keyword: "{query}"</h1>
+            <h1>Search keyword: "{query}"</h1>
           ) : (
             <h1>Posts</h1>
           )}
