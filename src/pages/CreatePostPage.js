@@ -69,7 +69,7 @@ const CreatePostPage = () => {
         setTitle("");
         setBody("");
       } else {
-        console.log("Fields are required!");
+        alert("Both fields are required!");
       }
     } catch (err) {
       dispatch({

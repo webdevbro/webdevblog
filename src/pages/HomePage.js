@@ -78,8 +78,8 @@ const HomePage = () => {
     try {
       const { data } = await axios.get(
         userId
-          ? `${backendAPI}/posts?userId=${userId}`
-          : `${backendAPI}/posts`,
+          ? `/api/posts?userId=${userId}`
+          : `/api/posts`,
       );
       const filteredPosts = query
         ? data.filter((item) => {
@@ -105,9 +105,7 @@ const HomePage = () => {
     dispatch({ type: "USERS_REQUEST" });
     try {
       const { data } = await axios.get(
-        userId
-          ? `${backendAPI}/users/${userId}`
-          : `${backendAPI}/users`,
+        userId ? `/api/users/${userId}` : `/api/users`,
       );
       dispatch({
         type: userId ? "USER_SUCCESS" : "USERS_SUCCESS",
@@ -124,7 +122,7 @@ const HomePage = () => {
   useEffect(() => {
     loadPosts();
     loadUsers();
-  }, [query, userId, backendAPI]);
+  }, [query, userId]);
 
   return (
     <div>

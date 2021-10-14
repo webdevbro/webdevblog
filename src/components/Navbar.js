@@ -11,8 +11,8 @@ const Navbar = () => {
     theme,
     toggleTheme,
     user,
-    backendAPI,
-    toggleBackendAPI,
+    /* backendAPI,
+    toggleBackendAPI, */
   } = useContext(ThemeContext);
   const [query, setQuery] = useState("");
   const history = useHistory();
@@ -56,9 +56,9 @@ const Navbar = () => {
         <button onClick={toggleTheme}>
           {theme === "light" ? "Dark" : "Light"}
         </button>{" "}
-        <button onClick={toggleBackendAPI}>
+        {/* <button onClick={toggleBackendAPI}>
           {backendAPI === "/api" ? "API:Mock" : "API:Real"}
-        </button>
+        </button> */}
       </div>
     </div>
   );

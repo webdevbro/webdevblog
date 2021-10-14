@@ -10,19 +10,19 @@ import { ThemeContext } from "../ThemeContext";
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "LOGIN_REQUEST":
+    case "REGISTER_REQUEST":
       return { ...state, loading: true };
-    case "LOGIN_SUCCESS":
+    case "REGISTER_SUCCESS":
       return {
         ...state,
         loading: false,
         error: "",
         loggedInUser: action.payload,
       };
-    case "LOGIN_FAIL":
+    case "REGISTER_FAIL":
       return {
         ...state,
-        loadgin: false,
+        loading: false,
         error: action.payload,
       };
 
@@ -31,9 +31,8 @@ const reducer = (state, action) => {
   }
 };
 
-const LoginPage = () => {
-  const { user, setUser, backendAPI } =
-    useContext(ThemeContext);
+const RegisterPage = () => {
+  const { user, setUser } = useContext(ThemeContext);
   const history = useHistory();
   if (user) {
     history.push("/profile");
@@ -44,34 +43,28 @@ const LoginPage = () => {
     loggedInUser: null,
   });
   const { loading, error, loggedInUser } = state;
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    dispatch({ type: "LOGIN_REQUEST" });
+    dispatch({ type: "REGISTER_REQUEST" });
     try {
-      const { data } = await axios(
-        `/api/users?email=${email}&password=${password}`,
-      );
-      if (data.length > 0) {
-        localStorage.setItem(
-          "user",
-          JSON.stringify(data[0]),
-        );
-        dispatch({
-          type: "LOGIN_SUCCESS",
-          payload: data[0],
-        });
-      } else {
-        dispatch({
-          type: "LOGIN_FAIL",
-          payload: "Invalid email or password",
-        });
-      }
+      const { data } = await axios.post(`/api/users`, {
+        name,
+        email,
+        password,
+        id: Math.floor(Math.random() * 1000000),
+      });
+      localStorage.setItem("user", JSON.stringify(data));
+      dispatch({
+        type: "REGISTER_SUCCESS",
+        payload: data,
+      });
     } catch (err) {
       dispatch({
-        type: "LOGIN_FAIL",
+        type: "REGISTER_FAIL",
         payload: err.message,
       });
     }
@@ -86,12 +79,25 @@ const LoginPage = () => {
 
   return (
     <div className="loginRegister">
-      <h1>Login User</h1>
+      <h1>Register User</h1>
       <form className="form" onSubmit={handleSubmit}>
+        <div className="form-item">
+          <label htmlFor="name">Name:</label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            required
+            autoComplete="off"
+            onChange={(event) => {
+              setName(event.target.value);
+            }}
+          />
+        </div>
         <div className="form-item">
           <label htmlFor="email">Email:</label>
           <input
-            type="email"
+            type="text"
             name="email"
             id="email"
             required
@@ -116,7 +122,7 @@ const LoginPage = () => {
         <div className="form-item">
           <label></label>
           <button type="submit" className="btn">
-            Log in
+            Register
           </button>
         </div>
         {loading && (
@@ -134,14 +140,8 @@ const LoginPage = () => {
         <div className="form-item">
           <label></label>
           <span className="btn">
-            New user?{" "}
-            <Link to="/register">Register now!</Link>
-          </span>
-        </div>
-        <div className="form-item">
-          <label></label>
-          <span>
-            Or use email: sincere@april.biz password: asdf
+            Already have an account?{" "}
+            <Link to="/login">Login!</Link>
           </span>
         </div>
       </form>
@@ -149,4 +149,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;

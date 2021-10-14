@@ -42,6 +42,7 @@ const User = mongoose.model(
     id: Number,
     name: String,
     email: String,
+    phone: String,
     password: String,
     website: String,
   }),
@@ -114,7 +115,7 @@ app.get("/api/users/:id", async (req, res) => {
 app.post("/api/users", async (req, res) => {
   if (
     !req.body.name ||
-    !res.body.email ||
+    !req.body.email ||
     !req.body.password
   ) {
     return res.send({ message: "Data is required." });
@@ -126,12 +127,12 @@ app.post("/api/users", async (req, res) => {
 /* edit user */
 app.put("/api/users/:id", async (req, res) => {
   const { id } = req.params;
-  const { email, name, phone, password, website } =
+  const { name, email, phone, password, website } =
     req.body;
-  const user = await User.findOne(id);
+  const user = await User.findOne({ id });
   if (user) {
-    user.email = email;
     user.name = name;
+    user.email = email;
     user.phone = phone;
     user.password = password;
     user.website = website;

@@ -44,10 +44,10 @@ const PostPage = () => {
     dispatch({ type: "POST_REQUEST" });
     try {
       const { data } = await axios.get(
-        `${backendAPI}/posts/${postId}`,
+        `/api/posts/${postId}`,
       );
       const { data: userData } = await axios.get(
-        `${backendAPI}/users/${data.userId}`,
+        `/api/users/${data.userId}`,
       );
       dispatch({
         type: "POST_SUCCESS",
